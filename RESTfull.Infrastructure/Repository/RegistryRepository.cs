@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//Тут функции неправильно написаны
+
 namespace RESTfull.Infrastructure
 {
     public class RegistryRepository
