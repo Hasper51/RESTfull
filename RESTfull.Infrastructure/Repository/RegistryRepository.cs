@@ -96,5 +96,7 @@ namespace RESTfull.Infrastructure
             _context.Add(registry);
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

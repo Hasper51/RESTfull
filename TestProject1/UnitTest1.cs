@@ -1,49 +1,30 @@
-namespace TestProject1
+using Microsoft.EntityFrameworkCore;
+using RESTfull.Domain;
+
+namespace RESTfull.Infrastructure
 {
-    public class Tests
+    public class Context : DbContext
     {
-        [SetUp]
-        public void Setup()
+        public Context(DbContextOptions<Context> options) : base(options)
         {
+            //Database.EnsureCreated();
         }
 
-        [Test]
-        
-        public void VoidTest()
-        {
-            var testHelper = new TestHelper();
-            var disciplineRepository = testHelper.DisciplineRepository;
-            Assert.Equals(1, 1);
-        }
+        public DbSet<Section> Sections { get; set; }
+        public DbSet<Discipline> Disciplines { get; set; }
+        public DbSet<Registry> Registries { get; set; }
 
-        [Test]
-        public void TestUpdateAdd()
-        {
-            var testHelper = new TestHelper();
-            var disciplineRepository = testHelper.DisciplineRepository;
-            var discipline = disciplineRepository.GetByTitleAsync("Math").Result;
-            disciplineRepository.ChangeTrackerClear();
-            discipline.Title = "Informatics";
-            discipline.Attestation = "Exam";
-            discipline.Hours = 100;
-            var sectionTitle = new Section { Title = "Computers", Content = "Big or small" };
-            discipline.AddSection(sectionTitle);
-            disciplineRepository.UpdateAsync(discipline).Wait();
-            Assert.Equals("Informatics", disciplineRepository.GetByTitleAsync("Informatics").Result.Title);
-            Assert.Equal(3, disciplineRepository.GetByTitleAsync("Informatics").Result.DisciplineCount);
-        }
 
-        [Test]
-        public void TestUpdateDelete()
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var testHelper = new TestHelper();
-            var disciplineRepository = testHelper.DisciplineRepository;
-            var discipline = disciplineRepository.GetByTitleAsync("Math").Result;
-            disciplineRepository.ChangeTrackerClear();
-            discipline.RemoveAt(0);
-            disciplineRepository.UpdateAsync(discipline).Wait();
-            Assert.Equal(1, disciplineRepository.GetByTitleAsync("Math").Result.DisciplineCount);
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Устанавливаем свойство RegistryId как внешний ключ для связи между Discipline и Registry
+            modelBuilder.Entity<Discipline>()
+                        .HasOne(d => d.Registry)
+                        .WithMany(r => r.Disciplines)
+                        .HasForeignKey(d => d.RegistryId);
+        }
     }
 }

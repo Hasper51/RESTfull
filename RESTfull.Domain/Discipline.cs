@@ -1,19 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace RESTfull.Domain;
 
-namespace RESTfull.Domain
+public class Discipline
 {
-    public class Discipline
+    public Guid Id { get; set; }
+    public string Title { get; set; } = String.Empty;
+    public string Attestation { get; set; } = String.Empty;
+    public int Hours { get; set; }
+    public List<Section> Sections { get; set; } =  new List<Section>();
+    public Guid RegistryId;
+    public Registry Registry { get; set; } = null!;
+    public void AddSection(Section section)
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; } = String.Empty;
-        public string Attestation { get; set; } = String.Empty;
-        public Guid Hours { get; set; }
-        public List<Section> Sections { get; set; } = null!;
-        public Guid RegistryId;
-        public Registry Registry { get; set; } = null!; 
+        Sections.Add(section);
+    }
+
+    // Добавлен метод для удаления секции по индексу
+    public void RemoveAt(int index)
+    {
+        if (index >= 0 && index < Sections.Count)
+        {
+            Sections.RemoveAt(index);
+        }
     }
 }

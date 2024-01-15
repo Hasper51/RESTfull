@@ -5,7 +5,7 @@ using RESTfull.Infrastructure;
 namespace RESTfull.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class DisciplineController : ControllerBase
     {
         private readonly Context _context;
@@ -13,7 +13,7 @@ namespace RESTfull.API.Controllers
         public DisciplineController(Context context)
         {
             _context = context;
-            _disciplineRepository = new DisciplineRepository(context);
+            _disciplineRepository = new DisciplineRepository(_context);
         }
 
         // GET: api/<ValuesController>
