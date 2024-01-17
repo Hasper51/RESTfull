@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 
 
-//Тут функции неправильно написаны
+
 
 
 
@@ -40,7 +40,6 @@ namespace RESTfull.Infrastructure
         {
             return await _context.Sections
                 .Where(s => s.Id == Id)
-                .Include(s => s.Discipline)
                 .FirstOrDefaultAsync();
         }
 

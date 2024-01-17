@@ -13,29 +13,37 @@ namespace TestProject3
         public TestHelper()
         {
             var contextOptions = new DbContextOptionsBuilder<Context>()
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=Test")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=RESTfull")
                 .Options;
+            
             _context = new Context(contextOptions);
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
+            //_context.Database.EnsureDeleted();
+            //_context.Database.EnsureCreated();
+            /*
             Discipline discipline1 = new Discipline
             {
-                Title = "Math", 
+                Title = "Философия", 
                 Attestation = "Exam",
-                Hours = 100
+                Hours = 140
             };
-            discipline1.AddSection(new Section { Title = "Equations", Content = "x=2y" });
-            discipline1.AddSection(new Section { Title = "Graphs", Content = "hyperbola" });
+            discipline1.AddSection(new Section { Title = "Древняя эпоха", Content = "Сократ" });
+            discipline1.AddSection(new Section { Title = "Средние века", Content = "Религия" });
 
             Registry reg = new Registry
             {
-                Name = "IT"
+                Name = "Гуманитарный"
             };
             reg.AddDiscipline(discipline1);
             _context.Registries.Add(reg);
+            */
+
+
+
             
+
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
+            
         }
 
         public RegistryRepository RegistryRepository

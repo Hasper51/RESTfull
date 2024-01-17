@@ -9,6 +9,8 @@ public class Discipline
     public List<Section> Sections { get; set; } =  new List<Section>();
     public Guid RegistryId;
     public Registry Registry { get; set; } = null!;
+    
+    
     public void AddSection(Section section)
     {
         Sections.Add(section);

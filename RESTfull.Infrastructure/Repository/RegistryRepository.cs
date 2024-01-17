@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-//Тут функции неправильно написаны
+
 
 namespace RESTfull.Infrastructure
 {
@@ -70,17 +70,17 @@ namespace RESTfull.Infrastructure
             if (existRegistry != null)
             {
                 _context.Entry(existRegistry).CurrentValues.SetValues(registry);
-                foreach (var discipline in registry.Disciplines)
+                foreach (var registry1 in registry.Disciplines)
                 {
                     var existDiscipline =
-                        existRegistry.Disciplines.FirstOrDefault(d => d.Id == discipline.Id);
+                        existRegistry.Disciplines.FirstOrDefault(d => d.Id == registry1.Id);
                     if (existDiscipline == null)
                     {
-                        existRegistry.Disciplines.Add(discipline);
+                        existRegistry.Disciplines.Add(registry1);
                     }
                     else
                     {
-                        _context.Entry(existDiscipline).CurrentValues.SetValues(discipline);
+                        _context.Entry(existDiscipline).CurrentValues.SetValues(registry1);
                     }
                 }
                 foreach (var existDiscipline in existRegistry.Disciplines)
@@ -98,8 +98,7 @@ namespace RESTfull.Infrastructure
         {
             _context.Add(registry);
             await _context.SaveChangesAsync();
-        }
 
-        
+        }
     }
 }

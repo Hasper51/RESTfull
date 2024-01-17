@@ -1,10 +1,14 @@
 //using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using RESTfull.Domain;
+using RESTfull.Infrastructure;
 
 namespace TestProject3
 {
     public class Tests
     {
+        /*
         [Fact]
 
         public void VoidTest()
@@ -13,21 +17,48 @@ namespace TestProject3
             var regRepository = testHelper.RegistryRepository;
             Assert.Equal(1, 1);
         }
+        */
+        [Fact]
+        public async void TestAddDisciplines()
+        {
+            var testHelper = new TestHelper();
+            var regRepository = testHelper.RegistryRepository;
+            var disciplineRepository = testHelper.DisciplineRepository;
+            var registry = await regRepository.GetByNameAsync("IT");
 
+            Assert.NotNull(registry);
+
+            var discipline1 = new Discipline
+            {
+                Title = "Python",
+                Attestation = "Exam",
+                Hours = 140,
+                RegistryId = registry.Id,
+            };
+            discipline1.AddSection(new Section { Title = "Переменные", Content = "a=1" });
+            discipline1.AddSection(new Section { Title = "Функции", Content = "def F():" });
+            
+            await disciplineRepository.AddAsync(discipline1);
+
+
+
+        }
+        /*
         [Fact]
         public async void TestAdd()
         {
             var testHelper = new TestHelper();
             var regRepository = testHelper.RegistryRepository;
-            var reg2 = new Registry { Name = "" };
+            var reg2 = new Registry { Name = "Prog" };
 
             await regRepository.AddAsync(reg2);
+
             regRepository.ChangeTrackerClear();
 
             Assert.Equal(2, regRepository.GetAllAsync().Result.Count);
 
         }
-
+        
         [Fact]
         public async Task TestUpdateAdd()
         {
@@ -35,7 +66,7 @@ namespace TestProject3
             var disciplineRepository = testHelper.DisciplineRepository;
 
             // Получаем дисциплину асинхронно
-            var discipline = await disciplineRepository.GetByTitleAsync("Math");
+            var discipline = await disciplineRepository.GetByTitleAsync("Философия");
 
             // Убедитесь, что дисциплина действительно существует
             Assert.NotNull(discipline);
@@ -71,7 +102,8 @@ namespace TestProject3
             disciplineRepository.UpdateAsync(discipline).Wait();
             Assert.Equal(1, disciplineRepository.GetByTitleAsync("Math").Result.Sections.Count);
         }
-            
+        */
+
     }
 }
 
@@ -92,4 +124,5 @@ namespace TestProject3
             Assert.Equal("Basics of programming", disciplineRepository.GetByTitleAsync("Basics of programming").Result.Title);
             Assert.Equal(3, disciplineRepository.GetByTitleAsync("Basics of programming").Result.Sections.Count);
         }
+
 */

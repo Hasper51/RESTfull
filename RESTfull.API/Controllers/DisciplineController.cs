@@ -14,6 +14,7 @@ namespace RESTfull.API.Controllers
         {
             _context = context;
             _disciplineRepository = new DisciplineRepository(_context);
+            
         }
 
         // GET: api/<ValuesController>
@@ -32,10 +33,12 @@ namespace RESTfull.API.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public async Task Post([FromBody] Discipline value)
+        public async Task PostDiscipline([FromBody] Discipline value)
         {
             await _disciplineRepository.AddAsync(value);
+            _disciplineRepository.ChangeTrackerClear();
         }
+        
         // PUT api/<ValuesController>/5
         [HttpPut]
         public async Task Put([FromBody] Discipline value)
